@@ -1,0 +1,11 @@
+/* Footer.css */
+
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute; /* Position the footer at the bottom of the page */
+  width: 100%; /* Make the footer full width */
+  bottom: 0; /* Position it at the bottom */
+}
