@@ -3,39 +3,59 @@
   font-family: "IBM Plex Sana Thai Looped", sans-serif;
    
 }
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 .body_container1 {
   flex: 1;
 }
 .body_container {
   display: flex;
   width: 120rem;
-  
   justify-content: start;
   align-items: start;
   flex-direction: column;
   padding: 15px;
   margin: 10px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(170, 240, 145, 0.64);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(5.5px);
   border-radius:10px;
   border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
+.wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
 .login_container {
   display: flex;
-  
-  align-content: center ;
-  justify-content: center;
-  align-items: center;
+  width: 50rem;
+  height: 50vh; 
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
   flex-direction: column;
   padding: 15px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(170, 240, 145, 0.64);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(5.5px);
-  border-radius:10px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  position: fixed; /* Position the container relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the container perfectly */
 }
+
 
 .sidebar_container {
   height: 100vh;
@@ -47,6 +67,22 @@
   align-items: center;
 }
 .sidebar{
+  display: flex;
+  width: 14rem;
+  height: 96vh;
+  position: sticky;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  padding: 15px;
+  margin: 10px;
+  background: rgba(170, 240, 145, 0.64);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(5.5px);
+  border-radius:10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+.sidebar1{
   display: flex;
   width: 14rem;
   height: 90%;
@@ -96,4 +132,27 @@ border-radius: 50%;
 h3{
   font-size: 1rem;
   margin: 10px 0px 10px 0px
+}
+
+/* CSS for the submenu item */
+.submenu-item {
+  margin: 5px 0; /* Adjust margin as needed for spacing between submenu items */
+}
+
+/* CSS for the submenu content */
+.submenu-content {
+  display: none; /* Initially hide the submenu content */
+  position: absolute;
+  top: 100%; /* Position it below the parent menu item */
+  right: 0; /* Right-align the submenu content */
+  background-color: #fff; /* Background color for the submenu content */
+  border: 1px solid #ccc; /* Border for the submenu content */
+  border-radius: 4px; /* Rounded corners for the submenu content */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Box shadow for the submenu content */
+  padding: 10px; /* Padding for the submenu content */
+}
+
+/* CSS to show the submenu content when the parent is active (open) */
+.submenu.open .submenu-content {
+  display: block;
 }

@@ -14,14 +14,11 @@ import { BiSolidDashboard } from "react-icons/bi";
 import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 
 import Header from "./Header";
-import Footer from "./Footer";
-
-
 
 const Home = () => {
   return (
     <>
-      <h1 className="header">Welcome To Virtual Manufacturing</h1>
+      <h1>Welcome To Virtual Manufacturing</h1>
       <h3>Virtual Manufacturing</h3>
       <p>...</p>
     </>
@@ -31,12 +28,13 @@ const Home = () => {
 const DashboardContent = () => {
   return (
     <>
-      <h1 className="header"> DASHBOARD PAGE</h1>
+      <h1> DASHBOARD PAGE</h1>
       <h3>Welcome to Virtual Manufacturing</h3>
       <p>Track Forklift Vehicle movement in factory based on the input coordinates</p>
     </>
   );
 };
+
 
 const EditProfile = () => {
   return (
@@ -116,6 +114,11 @@ function App() {
 
   return (
     <Router>
+    <div class="wrapper">
+ 
+     <div class="header">
+       <Header/>
+    </div>
       <div className="App">
         <motion.div
           data-Open={open}
@@ -200,7 +203,11 @@ function App() {
           </Routes>
         </div>
       </div>
+    
+      </div>
+      
     </Router>
+    
   );
 } else {
   return (

@@ -128,7 +128,7 @@ public class VMController {
 	 * @return
 	 */
 	private List<StopPoints> addRandomStopPoints(List<Coordinates> jsonDataList) {
-		    int stopPoints = jsonDataList.size() > 10 ? 5 : 0  ;
+		    int stopPoints = jsonDataList.size() > 10 ? 5 : 1 ;
 	        List<StopPoints> selectedList = new ArrayList<>();
 
 	        // Select random indices and add corresponding objects to the new list

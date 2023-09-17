@@ -60,6 +60,33 @@ const [title, setTitle] = useState("");
     }
   };
 
+  const handleUnitChange = (e) => {
+    const newValue = e.target.value;
+
+    // Use a regular expression to check if the input contains only numeric characters
+    if (/^\d*$/.test(newValue) && newValue.length <= 3) {
+      setUnit(newValue);
+    }
+  };
+
+  const handleTitleChange = (e) => {
+    const newValue = e.target.value;
+
+    // Use a regular expression to check if the input contains only alphanumeric characters
+    if (/^[a-zA-Z0-9]*$/.test(newValue) && newValue.length <= 10) {
+      setTitle(newValue);
+    }
+  };
+
+  const handleDeviceIdChange = (e) => {
+    const newValue = e.target.value;
+
+    // Use a regular expression to check if the input contains only alphanumeric characters
+    if (/^[a-zA-Z0-9]*$/.test(newValue) && newValue.length <= 10) {
+      setDeviceId(newValue);
+    }
+  };
+
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className="form-container">
@@ -88,14 +115,15 @@ const [title, setTitle] = useState("");
               <label htmlFor="title">Title:</label>
             </td>
             <td>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                maxLength={10}
-              />
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={handleTitleChange}
+              required
+              maxLength={10}
+              pattern="[a-zA-Z0-9]*"
+            />
             </td>
           </tr>
           <tr>
@@ -107,10 +135,10 @@ const [title, setTitle] = useState("");
                 type="text"
                 id="deviceId"
                 value={deviceId}
-                onChange={(e) => setDeviceId(e.target.value)}
+                onChange={handleDeviceIdChange}
                 required
                 maxLength={10}
-                
+                pattern="[a-zA-Z0-9]*"
               />
             </td>
           </tr>
@@ -151,10 +179,11 @@ const [title, setTitle] = useState("");
                 type="text"
                 id="unit"
                 value={unit}
-                onChange={(e) => setUnit(e.target.value)}
+                onChange={handleUnitChange}
                 required
                 maxLength={3}
-                
+                pattern="\d*"
+                placeholder="Enter numeric value (max 3 characters)"
               />
             </td>
           </tr>
