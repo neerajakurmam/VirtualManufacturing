@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProjectVO {
 
 	private String title;
+	private Integer unit;
 	private String deviceId;
 	private String scale;
 
@@ -27,6 +28,8 @@ public class ProjectVO {
 	private String imageFileName;
 
 	private String imageUrl;
+	
+	private String errorMsg;
 
 	public String getTitle() {
 		return title;
@@ -98,6 +101,22 @@ public class ProjectVO {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
 	}
 	
 

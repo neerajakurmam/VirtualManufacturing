@@ -10,8 +10,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -51,12 +53,20 @@ public class VMController {
 	@PostMapping(value = "/submitProject", consumes = { MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<ProjectVO> submitProject(@RequestParam("image") MultipartFile imageFile,
 			@RequestParam("title") String title,
+			@RequestParam("unit") Integer unit,
+			@RequestParam("deviceId") String deviceId,
 			@RequestParam("textFile") MultipartFile textFile) {
+		
+		boolean validation = true;
+		List<Coordinates> jsonDataList = new ArrayList<>();
+		String imageUrl = "";
+		String errorMsg = "";
+		ProjectVO projectVO = new ProjectVO();
+
 		try {
 
 			String imageName = StringUtils.cleanPath(imageFile.getOriginalFilename());
 			String dataLogName = StringUtils.cleanPath(textFile.getOriginalFilename());
-			String imageUrl = "";
 
 			try {
 				saveFile(UPLOAD_DIR, dataLogName, textFile);
@@ -64,12 +74,11 @@ public class VMController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			List<Coordinates> jsonDataList = new ArrayList<>();
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(textFile.getInputStream()))) {
 				String line;
 				while ((line = reader.readLine()) != null) {
 					String[] parts = line.split(",");
-					if (parts.length >= 5) {
+					if (parts.length >= 6) {
 						Coordinates jsonData = new Coordinates(parts[0],parts[3], Double.parseDouble(parts[4]), Double.parseDouble(parts[5]));
 						jsonDataList.add(jsonData);
 					}
@@ -77,14 +86,19 @@ public class VMController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			ProjectVO projectVO = prepareProjectVO(title, imageUrl, jsonDataList);
-
-			return new ResponseEntity<ProjectVO>(projectVO, HttpStatus.OK);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			ProjectVO projectVO = new ProjectVO();
 			return new ResponseEntity<ProjectVO>(projectVO, HttpStatus.BAD_REQUEST);
 		}
+		if(jsonDataList.isEmpty()) {
+			validation = false;
+			projectVO.setErrorMsg("Upload Data Log with Valid Data");
+		} else {
+			projectVO = prepareProjectVO(title,unit, deviceId, imageUrl, jsonDataList);
+		}
+		
+		return new ResponseEntity<ProjectVO>(projectVO, HttpStatus.OK);
 	}
 
 	/**
@@ -94,12 +108,17 @@ public class VMController {
 	 * @param jsonDataList
 	 * @return
 	 */
-	private ProjectVO prepareProjectVO(String title, String imageUrl, List<Coordinates> jsonDataList) {
+	private ProjectVO prepareProjectVO(String title, Integer unit,String deviceId, String imageUrl, List<Coordinates> jsonDataList) {
 		ProjectVO projectVO = new ProjectVO();
 		projectVO.setTitle(title);
+		projectVO.setUnit(unit);
+		projectVO.setDeviceId(deviceId);
 		projectVO.setImageUrl(imageUrl);
-		projectVO.setLogJsonDataList(jsonDataList);
-		projectVO.setStopPoints(addRandomStopPoints(jsonDataList));
+		List<Coordinates> sortedListOnTime = jsonDataList.stream()
+                .sorted(Comparator.comparing(Coordinates::getTimeStamp))
+                .collect(Collectors.toList());
+		projectVO.setLogJsonDataList(sortedListOnTime);
+		projectVO.setStopPoints(addRandomStopPoints(sortedListOnTime));
 		return projectVO;
 	}
 

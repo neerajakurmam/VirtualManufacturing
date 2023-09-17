@@ -5,11 +5,13 @@ import ForkListMovement from "./ForkListMovement";
 function NewProject() {
 const [title, setTitle] = useState("");
   const [deviceId, setDeviceId] = useState("");
+  const [unit, setUnit] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [textFile, setTextFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [dataLog, setDataLog] = useState("");
   const [stopPoints, setStopPoints] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
 
 
@@ -35,6 +37,7 @@ const [title, setTitle] = useState("");
     const formData = new FormData();
     formData.append("title", title);
     formData.append("deviceId", deviceId);
+    formData.append("unit", unit);
     formData.append("image", imageFile);
     formData.append("textFile", textFile);
 
@@ -50,6 +53,9 @@ const [title, setTitle] = useState("");
       setDataLog(result.logJsonDataList); // Assuming the backend returns the image URL
       setImageUrl(result.imageUrl);
       setStopPoints(result.stopPoints);
+      setErrorMsg(result.errorMsg);
+      setUnit(result.unit);
+      setDeviceId(result.deviceId);
 
     }
   };
@@ -88,6 +94,7 @@ const [title, setTitle] = useState("");
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
+                maxLength={10}
               />
             </td>
           </tr>
@@ -102,6 +109,8 @@ const [title, setTitle] = useState("");
                 value={deviceId}
                 onChange={(e) => setDeviceId(e.target.value)}
                 required
+                maxLength={10}
+                
               />
             </td>
           </tr>
@@ -133,13 +142,35 @@ const [title, setTitle] = useState("");
               />
             </td>
           </tr>
+          <tr>
+            <td>
+              <label htmlFor="unit">Unit</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="unit"
+                value={unit}
+                onChange={(e) => setUnit(e.target.value)}
+                required
+                maxLength={3}
+                
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
       <button type="submit">Submit</button>
       </form>
-      {dataLog && (
+      {errorMsg && (
+        
+        <div className="error-message">
+          {errorMsg}</div>
+      )}
+      {         
+      dataLog && (
         <div className="img-container">
-                <ForkListMovement path={dataLog} stopPoints={stopPoints} imageUrl={imageUrl} />
+                <ForkListMovement path={dataLog} stopPoints={stopPoints} imageUrl={imageUrl} unit={unit} deviceId={deviceId}/>
 
         </div>
       )}

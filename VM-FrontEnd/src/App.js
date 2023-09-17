@@ -1,9 +1,6 @@
 import "./App.css";
 import { motion } from "framer-motion";
-import {  
-  DashboardRounded,
-  TocRounded,
-} from "@material-ui/icons";
+
 import Item from "./component/Item";
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link,useNavigate } from 'react-router-dom';
@@ -13,6 +10,8 @@ import { ImUser } from "react-icons/im";
 import { AiOutlineProject } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
 import { AiOutlineOrderedList } from "react-icons/ai";
+import { BiSolidDashboard } from "react-icons/bi";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -30,16 +29,6 @@ const Home = () => {
 };
 
 const DashboardContent = () => {
-  return (
-    <>
-      <h1 className="header"> DASHBOARD PAGE</h1>
-      <h3>Welcome to Virtual Manufacturing</h3>
-      <p>Track Forklift Vehicle movement in factory based on the input coordinates</p>
-    </>
-  );
-};
-
-const Dashboard = () => {
   return (
     <>
       <h1 className="header"> DASHBOARD PAGE</h1>
@@ -128,7 +117,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        
         <motion.div
           data-Open={open}
           variants={sideContainerVariants}
@@ -160,33 +148,31 @@ function App() {
               onClick={handleToggle}
               className="lines_icon"
             >
-              <TocRounded />
+              <BsFillArrowLeftSquareFill />
             </motion.div>
-          
+            <div className="groups">
+              {/* group 1 */}
+              <div className="group">
+                 <h3>Virtual Manufacturing</h3>
+              </div>
+            </div>
             {/* groups */}
             <div className="groups">
               {/* group 1 */}
               <div className="group">
                 <Link to="/dashboard" className="link">
-                  <Item icon={<DashboardRounded />} name="Dashboard" />
+                  <Item icon={<BiSolidDashboard />} name="Dashboard" />
                 </Link>
               </div>
             </div>
             {/* group 2 */}
             <div className="group">
-              <motion.h3
-                animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
-              >
-                Projects
-              </motion.h3>
+            
               <Link to="/newproject" className="link">
                 <Item icon={<AiOutlineProject />} name="New Projects" />
                
               </Link>
-              <Link to="/projectlist" className="link">
-                <Item icon={<AiOutlineOrderedList />} name="List" />
             
-              </Link>
             </div>
             {/* group 3 */}
             <div className="group">
