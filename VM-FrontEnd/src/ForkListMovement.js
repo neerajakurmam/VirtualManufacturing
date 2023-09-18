@@ -26,8 +26,8 @@ class ForkListMovement extends Component {
   };
 
   render() {
-    const canvasWidth = 800;
-    const canvasHeight = 800;
+    const canvasWidth = 700;
+    const canvasHeight = 900;
     const axisPadding = 20;
     const axisLength = canvasWidth - 2 * axisPadding;
 
