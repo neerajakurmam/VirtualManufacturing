@@ -166,3 +166,41 @@ img {
   border-radius: 5px; /* Optional border radius for rounded corners */
   font-weight: bold; /* Optional font weight for bold text */
 }
+
+.glassy-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #6e8ddce6; /* Background color with transparency */
+  border: 1px solid #cccccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for a glassy effect */
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 300px; /* Adjust the maximum width as needed */
+  z-index: 1000; /* Ensure the popup is above other elements */
+}
+
+.glassy-popup h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.glassy-popup p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.glassy-popup button {
+  background-color: #0074cc; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.glassy-popup button:hover {
+  background-color: #005ea6; /* Hover background color */
+}

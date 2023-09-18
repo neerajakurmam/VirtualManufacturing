@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
 import './App.css'; // Add your CSS styles here
+import './ForkListMovement.css'; // Add your CSS styles here
 
 class ForkListMovement extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedStop: null,
+      popupState:false
     };
   }
 
-  handleCircleClick = (point, deviceId) => {
+  handleCircleClick1 = (point, deviceId) => {
     alert(`Title: ${point.title}\nDevice: ${deviceId}\nDuration: ${point.duration}\nCoordinates: (${point.x}, ${point.y})`);
+  };
+
+  handleCircleClick = (point, deviceId) => {
+      console.log("Clicked on stop point:", point, deviceId);
+
+    this.setState({ selectedStop: { point, deviceId } });
+  };
+
+  handleClosePopup = () => {
+    this.setState({ selectedStop: null });
   };
 
   render() {
@@ -44,10 +56,10 @@ class ForkListMovement extends Component {
 
           {/* Draw Y-axis scale markings */}
           {/*Array.from({ length: 21 }).map((_, index) => {
-            const y = canvasHeight / 2 - (index - 10) * (axisLength / 20);
+            const y = canvasHeight / 2 + (10 - index) * (axisLength / 20); // Reverse the Y-axis coordinates
             const textX = canvasWidth / 2 + 20;
             const textY = y + 5;
-            const coordinateY = (10 - index) * unit; // Calculate the Y coordinate based on the unit
+            const coordinateY = (index - 10) * unit; // Calculate the Y coordinate based on the unit
             return (
               <g key={index}>
                 <line x1={canvasWidth / 2 - 5} y1={y} x2={canvasWidth / 2 + 5} y2={y} stroke="black" />
@@ -57,6 +69,7 @@ class ForkListMovement extends Component {
               </g>
             );
           })}
+
 
           {/* Draw the path */}
           <polyline
@@ -79,7 +92,18 @@ class ForkListMovement extends Component {
               onClick={() => this.handleCircleClick(point,deviceId)}
             />
           ))}
+
+         
         </svg>
+          {/* Render the Popup when a stop is selected */}
+        {this.state.selectedStop && (
+          <div className="glassy-popup">
+            <h3>Title: {this.state.selectedStop.point.title}</h3>
+            <p>Device: {this.state.selectedStop.deviceId}</p>
+            <p>Duration: {this.state.selectedStop.point.duration}</p>
+            <button onClick={this.handleClosePopup}>Close</button>
+          </div>
+        )}
       </div>
     );
   }
