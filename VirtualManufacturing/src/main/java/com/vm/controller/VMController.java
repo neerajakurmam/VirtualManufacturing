@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -118,6 +119,7 @@ public class VMController {
                 .sorted(Comparator.comparing(Coordinates::getTimeStamp))
                 .collect(Collectors.toList());
 		projectVO.setLogJsonDataList(sortedListOnTime);
+		
 		projectVO.setStopPoints(addRandomStopPoints(sortedListOnTime));
 		return projectVO;
 	}
@@ -128,16 +130,28 @@ public class VMController {
 	 * @return
 	 */
 	private List<StopPoints> addRandomStopPoints(List<Coordinates> jsonDataList) {
-		    int stopPoints = jsonDataList.size() > 10 ? 5 : 1 ;
-	        List<StopPoints> selectedList = new ArrayList<>();
 
-	        // Select random indices and add corresponding objects to the new list
-	        for (int i = 0; i < stopPoints; i++) {
-	            int randomIndex = new Random().nextInt(jsonDataList.size());
-	            Coordinates selectedObject = jsonDataList.get(randomIndex);
-	            selectedList.add(new StopPoints(selectedObject.getDeviceId(), selectedObject.getX(), selectedObject.getY(),"Stop "+i , 100));
-	        }
-		return selectedList;
+        List<Coordinates> newjsonDataList = new ArrayList<>(jsonDataList);
+
+		Collections.shuffle(newjsonDataList);
+		List<Coordinates> randomList = new ArrayList<>();
+
+		if(newjsonDataList.size() >= 10) {
+			randomList = newjsonDataList.subList(0, Math.min(5, newjsonDataList.size()));
+		} else {
+			randomList.add(newjsonDataList.get(new Random().nextInt(newjsonDataList.size())));
+		}
+
+		List<Coordinates> sortedStopPointsOnTime = randomList.stream()
+		.sorted(Comparator.comparing(Coordinates::getTimeStamp))
+		.collect(Collectors.toList());
+		List<StopPoints> stopPointList = new ArrayList<>();
+		// Select random indices and add corresponding objects to the new list
+		for (int i = 0; i < sortedStopPointsOnTime.size(); i++) {
+			Coordinates selectedObject = sortedStopPointsOnTime.get(i);
+			stopPointList.add(new StopPoints(selectedObject.getDeviceId(), selectedObject.getX(), selectedObject.getY(),"Stop "+i , 100));
+		}
+		return stopPointList;
 	}
 
 	/**
@@ -196,4 +210,3 @@ public class VMController {
 		}
 	}
 }
-
