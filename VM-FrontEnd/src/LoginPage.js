@@ -8,6 +8,7 @@ function LoginPage({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +24,13 @@ function LoginPage({ onLogin }) {
         },
         body: JSON.stringify({ username, password }),
       });
-
+      console.log("response login : "+response);
       if (response.ok) {
         setIsLoggedIn(true);
         onLogin(); // Notify the parent component about successful login
       } else {
+        setIsLoggedIn(false);
+        setErrorMsg("Invalid Username or Password");
         // Handle authentication error (e.g., show an error message)
       }
     } catch (error) {
@@ -75,11 +78,17 @@ function LoginPage({ onLogin }) {
                 <td></td>
                 <td>
                   <button type="submit">Login</button>
+                  {errorMsg && (
+        
+        <div className="error-message">
+        {errorMsg}</div>
+    )}
                 </td>
               </tr>
             </tbody>
           </table>
         </form>
+       
       </div>
     </div>
   );
